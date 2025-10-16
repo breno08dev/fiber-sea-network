@@ -6,10 +6,11 @@ import About from './components/About';
 import Location from './components/Location';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import WhatsAppButton from './components/WhatsAppButton'; // 1. Importe o novo componente
 
 function App() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-black">
       <Header />
       <Hero />
       <Plans />
@@ -18,6 +19,7 @@ function App() {
       <Location />
       <Contact />
       <Footer />
+      <WhatsAppButton /> {/* 2. Adicione o botão aqui */}
     </div>
   );
 }

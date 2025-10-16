@@ -1,54 +1,75 @@
-import { Zap, Rocket, Star } from 'lucide-react';
+import { Zap, Rocket, Star, Shield, Award, Gem } from 'lucide-react';
 
 const plans = [
   {
-    name: 'Plano Start',
-    speed: '200 MB',
-    price: 'R$ 89,90',
+    name: 'Plano Básico',
+    speed: '100 MB',
+    price: 'R$ 79,90',
     icon: Zap,
-    features: ['Ideal para navegar', 'Suporte 24/7', 'Instalação grátis'],
+    features: ['Ideal para redes sociais', 'Suporte 24/7', 'Instalação grátis'],
   },
   {
-    name: 'Plano Turbo',
-    speed: '400 MB',
-    price: 'R$ 119,90',
+    name: 'Plano Start',
+    speed: '300 MB',
+    price: 'R$ 99,90',
     icon: Rocket,
-    features: ['Para streaming HD', 'Suporte prioritário', 'Wi-Fi incluso'],
+    features: ['Streaming em HD', 'Wi-Fi incluso', 'Suporte prioritário'],
+  },
+  {
+    name: 'Plano Pro',
+    speed: '500 MB',
+    price: 'R$ 129,90',
+    icon: Award,
+    features: ['Ideal para home office', 'Streaming em 4K', 'Roteador premium'],
     popular: true,
   },
   {
+    name: 'Plano Gamer',
+    speed: '700 MB',
+    price: 'R$ 159,90',
+    icon: Shield,
+    features: ['Baixa latência para jogos', 'IP fixo opcional', 'Suporte VIP'],
+  },
+  {
     name: 'Plano Ultra',
-    speed: '600 MB',
-    price: 'R$ 149,90',
+    speed: '1 GB',
+    price: 'R$ 199,90',
     icon: Star,
-    features: ['Gaming e 4K', 'Suporte VIP', 'Roteador premium'],
+    features: ['Para toda a família', 'Conexão simultânea', 'Benefícios exclusivos'],
+  },
+  {
+    name: 'Plano Diamond',
+    speed: '2 GB',
+    price: 'R$ 299,90',
+    icon: Gem,
+    features: ['Máxima performance', 'Atendimento exclusivo', 'Todos os benefícios inclusos'],
   },
 ];
 
 export default function Plans() {
-  const scrollToContact = () => {
-    const element = document.getElementById('contato');
-    element?.scrollIntoView({ behavior: 'smooth' });
+  const openWhatsApp = () => {
+    const whatsappUrl = `https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre os planos de internet.`;
+    window.open(whatsappUrl, '_blank');
   };
 
   return (
-    <section id="planos" className="py-20 bg-white">
+    <section id="planos" className="py-20 bg-black">
       <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-black">
-          Escolha o plano ideal pra você
+        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-white">
+          Escolha o plano ideal para você
         </h2>
-        <p className="text-center text-gray-600 mb-12 text-lg">
-          Velocidade, estabilidade e o melhor custo-benefício
+        <p className="text-center text-gray-400 mb-12 text-lg">
+          Velocidade, estabilidade e o melhor custo-benefício.
         </p>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
           {plans.map((plan) => {
             const Icon = plan.icon;
             return (
               <div
                 key={plan.name}
-                className={`relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 border-2 ${
-                  plan.popular ? 'border-[#3BA9FC] scale-105' : 'border-gray-200'
+                className={`relative bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2 border-2 ${
+                  plan.popular ? 'border-[#3BA9FC] scale-105' : 'border-gray-800'
                 }`}
               >
                 {plan.popular && (
@@ -63,15 +84,15 @@ export default function Plans() {
                   </div>
                 </div>
 
-                <h3 className="text-2xl font-bold text-center mb-2 text-black">{plan.name}</h3>
+                <h3 className="text-2xl font-bold text-center mb-2 text-white">{plan.name}</h3>
                 <div className="text-center mb-6">
                   <span className="text-5xl font-bold text-[#3BA9FC]">{plan.speed}</span>
-                  <p className="text-3xl font-bold text-black mt-2">{plan.price}<span className="text-lg text-gray-600">/mês</span></p>
+                  <p className="text-3xl font-bold text-white mt-2">{plan.price}<span className="text-lg text-gray-400">/mês</span></p>
                 </div>
 
                 <ul className="space-y-3 mb-8">
                   {plan.features.map((feature, index) => (
-                    <li key={index} className="flex items-center text-gray-700">
+                    <li key={index} className="flex items-center text-gray-300">
                       <svg className="w-5 h-5 text-[#3BA9FC] mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
@@ -81,11 +102,11 @@ export default function Plans() {
                 </ul>
 
                 <button
-                  onClick={scrollToContact}
+                  onClick={openWhatsApp}
                   className={`w-full py-3 rounded-full font-semibold transition transform hover:scale-105 ${
                     plan.popular
                       ? 'bg-[#3BA9FC] text-white hover:bg-[#2a8cd6]'
-                      : 'bg-gray-100 text-[#3BA9FC] hover:bg-gray-200'
+                      : 'bg-gray-800 text-[#3BA9FC] hover:bg-gray-700'
                   }`}
                 >
                   Contratar Agora
