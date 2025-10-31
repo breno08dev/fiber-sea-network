@@ -6,7 +6,8 @@ import About from './components/About';
 import Location from './components/Location';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
-import WhatsAppButton from './components/WhatsAppButton'; // 1. Importe o novo componente
+import WhatsAppButton from './components/WhatsAppButton';
+import CookieConsent from './components/CookieConsent'; // 1. Importe o novo componente
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
       <Location />
       <Contact />
       <Footer />
-      <WhatsAppButton /> {/* 2. Adicione o botão aqui */}
+      <WhatsAppButton />
+      <CookieConsent /> {/* 2. Adicione o banner de cookies aqui */}
     </div>
   );
 }

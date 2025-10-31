@@ -1,8 +1,12 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { User, MessageSquare } from 'lucide-react';
-import contactImage from '../assets/equipe-de-telemarketing.jpeg'; // Importe a imagem aqui
+import contactImage from '../assets/atendimento.png';
+import { useInView } from '../hooks/useInView';
 
 export default function Contact() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.1 });
+
   const [formData, setFormData] = useState({
     name: '',
     message: '',
@@ -10,10 +14,8 @@ export default function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     const text = `Olá! Meu nome é ${formData.name}.%0A%0A${formData.message}`;
     const whatsappUrl = `https://wa.me/5511999999999?text=${text}`;
-
     window.open(whatsappUrl, '_blank');
   };
 
@@ -25,7 +27,13 @@ export default function Contact() {
   };
 
   return (
-    <section id="contato" className="py-20 bg-black">
+    <section
+      ref={ref}
+      id="contato"
+      // Duração alterada para 1500ms
+      className={`py-20 bg-black opacity-0 transition-all duration-[1500ms] ease-out
+                  ${isInView ? 'opacity-100 translate-y-0' : 'translate-y-10'}`}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
             <h2 className="text-4xl md:text-5xl font-bold mb-4 text-white">
@@ -37,7 +45,6 @@ export default function Contact() {
         </div>
 
         <div className="max-w-4xl mx-auto bg-gray-900 rounded-2xl shadow-lg border border-gray-800 grid md:grid-cols-2">
-            {/* Área com a imagem importada */}
             <div
                 className="relative rounded-t-2xl md:rounded-tr-none md:rounded-l-2xl h-64 md:h-auto bg-cover bg-center"
                 style={{ backgroundImage: `url(${contactImage})` }}

@@ -1,4 +1,6 @@
 import { Target, Eye, Heart } from 'lucide-react';
+import { useRef } from 'react';
+import { useInView } from '../hooks/useInView';
 
 const values = [
   {
@@ -19,8 +21,17 @@ const values = [
 ];
 
 export default function About() {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { threshold: 0.1 });
+
   return (
-    <section id="sobre" className="py-20 bg-black">
+    <section
+      ref={ref}
+      id="sobre"
+      // Duração alterada para 1500ms
+      className={`py-20 bg-black opacity-0 transition-all duration-[1500ms] ease-out
+                  ${isInView ? 'opacity-100 translate-y-0' : 'translate-y-10'}`}
+    >
       <div className="container mx-auto px-4">
         <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white">
           Nosso Propósito

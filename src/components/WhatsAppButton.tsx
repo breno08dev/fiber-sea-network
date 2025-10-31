@@ -1,5 +1,4 @@
-
-  export default function WhatsAppButton() {
+export default function WhatsAppButton() {
   const openWhatsApp = () => {
     const whatsappUrl = `https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre os planos de internet.`;
     window.open(whatsappUrl, '_blank');
@@ -17,4 +16,3 @@
     </button>
   );
 }
-
