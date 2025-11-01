@@ -7,11 +7,13 @@ import Location from './components/Location';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
-import CookieConsent from './components/CookieConsent'; // 1. Importe o novo componente
+import CookieConsent from './components/CookieConsent';
 
 function App() {
   return (
-    <div className="min-h-screen bg-black">
+    // Removemos o "bg-gradient-to-b from-black to-gray-950" daqui
+    // para que o fundo do 'body' (definido no index.css) apareça.
+    <div className="min-h-screen">
       <Header />
       <Hero />
       <Plans />
@@ -21,7 +23,7 @@ function App() {
       <Contact />
       <Footer />
       <WhatsAppButton />
-      <CookieConsent /> {/* 2. Adicione o banner de cookies aqui */}
+      <CookieConsent />
     </div>
   );
 }

@@ -29,7 +29,7 @@ export default function CookieConsent() {
           
           {/* Texto e Ícone */}
           <div className="flex items-center space-x-3">
-            <Cookie className="w-6 h-6 text-[#3BA9FC] flex-shrink-0" />
+            <Cookie className="w-6 h-6 text-[#3BA9FC] flex-shrink-0 drop-shadow-[0_0_5px_rgba(59,169,252,0.7)]" />
             <p className="text-gray-300 text-sm md:text-base">
               Nós utilizamos cookies para melhorar sua experiência de navegação.
               Ao continuar, você concorda com nossa política de privacidade.

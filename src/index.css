@@ -14,6 +14,18 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* NOVO BACKGROUND 
+    A base é preta, com um gradiente linear para um azul-escuro (slate-950)
+    e um "brilho" radial sutil no topo da página.
+  */
+  background-color: #020617; /* Cor de fallback (Tailwind slate-950) */
+  background-image: 
+    /* Um "brilho" azul sutil vindo de cima (usando nossa cor #3BA9FC com 15% opacidade) */
+    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(59, 169, 252, 0.15), transparent),
+    /* Um gradiente de preto para azul-escuro (Tailwind slate-950) */
+    linear-gradient(180deg, #000000 0%, #020617 100%);
+  background-attachment: fixed; /* O fundo não rola com a página */
 }
 
 html {

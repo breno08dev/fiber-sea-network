@@ -15,14 +15,14 @@ export default function Footer() {
     <footer
       ref={ref}
       // Duração alterada para 1500ms
-      className={`bg-black text-white py-12 opacity-0 transition-all duration-[1500ms] ease-out
+      className={`text-white py-12 opacity-0 transition-all duration-[1500ms] ease-out
                   ${isInView ? 'opacity-100 translate-y-0' : 'translate-y-10'}`}
     >
       <div className="container mx-auto px-4">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
             <div className="flex items-center space-x-2 mb-4">
-              <Wifi className="w-8 h-8 text-[#3BA9FC]" />
+              <Wifi className="w-8 h-8 text-[#3BA9FC] drop-shadow-[0_0_5px_rgba(59,169,252,0.7)]" />
               <span className="text-2xl font-bold">SUA EMPRESA</span>
             </div>
             <p className="text-gray-400">

@@ -31,7 +31,7 @@ export default function Contact() {
       ref={ref}
       id="contato"
       // Duração alterada para 1500ms
-      className={`py-20 bg-black opacity-0 transition-all duration-[1500ms] ease-out
+      className={`py-20 opacity-0 transition-all duration-[1500ms] ease-out
                   ${isInView ? 'opacity-100 translate-y-0' : 'translate-y-10'}`}
     >
       <div className="container mx-auto px-4">
@@ -69,7 +69,7 @@ export default function Contact() {
                     value={formData.name}
                     onChange={handleChange}
                     required
-                    className="w-full pl-10 pr-4 py-3 bg-gray-800 border-2 border-gray-700 rounded-lg focus:border-[#3BA9FC] focus:outline-none transition text-white"
+                    className="w-full pl-10 pr-4 py-3 bg-gray-800 border-2 border-gray-700 rounded-lg focus:border-[#3BA9FC] focus:outline-none focus:ring-4 focus:ring-[#3BA9FC]/30 transition text-white"
                     placeholder="Nome completo"
                   />
                 </div>
@@ -88,7 +88,7 @@ export default function Contact() {
                     onChange={handleChange}
                     required
                     rows={5}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-800 border-2 border-gray-700 rounded-lg focus:border-[#3BA9FC] focus:outline-none transition text-white resize-none"
+                    className="w-full pl-10 pr-4 py-3 bg-gray-800 border-2 border-gray-700 rounded-lg focus:border-[#3BA9FC] focus:outline-none focus:ring-4 focus:ring-[#3BA9FC]/30 transition text-white resize-none"
                     placeholder="Digite sua mensagem aqui..."
                   />
                 </div>

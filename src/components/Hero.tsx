@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useInView } from '../hooks/useInView';
-import heroBackgroundImage from '../assets/teste12.png';
+import heroBackgroundImage from '../assets/familia2.jpg';
 
 export default function Hero() {
   const ref = useRef(null);
@@ -16,7 +16,7 @@ export default function Hero() {
       ref={ref}
       id="inicio"
       // Duração alterada para 1500ms
-      className={`relative h-[80vh] flex items-center justify-center bg-black text-white pt-20 
+      className={`relative h-[80vh] flex items-center justify-center text-white pt-20 
                  opacity-0 transition-all duration-[1500ms] ease-in-out
                  ${isInView ? 'opacity-100 scale-100' : 'scale-90'}`}
     >
@@ -38,7 +38,7 @@ export default function Hero() {
         </p>
         <button
           onClick={openWhatsApp}
-          className="bg-[#3BA9FC] text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-[#2a8cd6] transition transform hover:scale-105 shadow-xl"
+          className="bg-[#3BA9FC] text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-[#2a8cd6] transition transform hover:scale-105 shadow-xl shadow-[#3BA9FC]/50 hover:shadow-[#3BA9FC]/40"
         >
           Contratar Agora
         </button>

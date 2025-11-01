@@ -11,7 +11,7 @@ export default function Location() {
       ref={ref}
       id="localizacao"
       // Duração alterada para 1500ms
-      className={`py-20 bg-black text-white opacity-0 transition-all duration-[1500ms] ease-out
+      className={`py-20 text-white opacity-0 transition-all duration-[1500ms] ease-out
                   ${isInView ? 'opacity-100 translate-y-0' : 'translate-y-10'}`}
     >
       <div className="container mx-auto px-4">
@@ -22,7 +22,7 @@ export default function Location() {
         <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
           <div className="space-y-8">
             <div className="flex items-start space-x-4">
-              <MapPin className="w-8 h-8 text-[#3BA9FC] flex-shrink-0 mt-1" />
+              <MapPin className="w-8 h-8 text-[#3BA9FC] flex-shrink-0 mt-1 drop-shadow-[0_0_5px_rgba(59,169,252,0.7)]" />
               <div>
                 <h3 className="text-2xl font-bold mb-2">Nosso Endereço</h3>
                 <p className="text-gray-300 text-lg">
@@ -34,7 +34,7 @@ export default function Location() {
             </div>
 
             <div className="flex items-start space-x-4">
-              <Clock className="w-8 h-8 text-[#3BA9FC] flex-shrink-0 mt-1" />
+              <Clock className="w-8 h-8 text-[#3BA9FC] flex-shrink-0 mt-1 drop-shadow-[0_0_5px_rgba(59,169,252,0.7)]" />
               <div>
                 <h3 className="text-2xl font-bold mb-2">Horário de Atendimento</h3>
                 <div className="text-gray-300 text-lg space-y-1">

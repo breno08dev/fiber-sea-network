@@ -41,7 +41,7 @@ export default function Streaming() {
       ref={ref}
       id="streaming"
       // Duração alterada para 1500ms (mantendo a animação suave de subida)
-      className={`py-20 bg-black opacity-0 transition-all duration-[1500ms] ease-out
+      className={`py-20 opacity-0 transition-all duration-[1500ms] ease-out
                   ${isInView ? 'opacity-100 translate-y-0' : 'translate-y-10'}`}
     >
       <div className="container mx-auto px-4">
@@ -54,30 +54,47 @@ export default function Streaming() {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
+        {/* Grid principal: 1 coluna no mobile, 2 em desktop */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-6xl mx-auto items-center">
           
-          <div className="relative h-96 lg:h-[500px] w-full">
-            <div
-              className="absolute top-0 left-0 w-3/4 h-3/4 rounded-2xl bg-cover bg-center shadow-2xl transform -rotate-6 transition-transform duration-500 hover:rotate-0 hover:scale-105"
-              style={{
-                backgroundImage: `url(${streamingImageUrl})`,
-              }}
+          {/* Coluna de Imagens (MODIFICADA para "Bonito" no Mobile) */}
+          {/*
+            Mobile (Padrão):
+            - flex-col / items-center: Centraliza o "stack" de imagens.
+            - as imagens usam w-11/12 para não cortar nas bordas com a rotação.
+            - A segunda imagem usa -mt-32 (uma sobreposição grande) e z-20.
+            
+            Desktop (lg:):
+            - lg:relative / lg:h-[500px]: Reseta o flex e define altura para o position absolute.
+            - as imagens resetam suas larguras/rotações/margens para o layout de desktop.
+          */}
+          <div className="flex flex-col items-center lg:relative lg:h-[500px]">
+            {/* Imagem 1: Fica por baixo, rotacionada */}
+            <img
+              src={streamingImageUrl}
+              alt="Pessoas assistindo streaming"
+              className="w-11/12 h-64 rounded-2xl shadow-2xl object-cover z-10
+                         transform -rotate-6 transition-transform duration-500 hover:rotate-0 hover:scale-105
+                         lg:absolute lg:top-0 lg:left-0 lg:w-3/4 lg:h-3/4"
             />
-            <div
-              className="absolute bottom-0 right-0 w-3/4 h-3/4 rounded-2xl bg-cover bg-center shadow-2xl transform rotate-6 transition-transform duration-500 hover:rotate-0 hover:scale-105 border-4 border-black"
-              style={{
-                backgroundImage: `url(${gamingImageUrl})`,
-              }}
+            {/* Imagem 2: Fica por cima, rotacionada na outra direção e sobreposta */}
+            <img
+              src={gamingImageUrl}
+              alt="Amigos jogando video game"
+              className="w-11/12 h-64 rounded-2xl shadow-2xl object-cover border-4 border-black z-20
+                         transform rotate-6 -mt-32 transition-transform duration-500 hover:rotate-0 hover:scale-105
+                         lg:absolute lg:bottom-0 lg:right-0 lg:w-3/4 lg:h-3/4 lg:mt-0"
             />
           </div>
 
+          {/* Coluna de Texto/Benefícios */}
           <div className="space-y-8">
             {benefits.map((item) => {
               const Icon = item.icon;
               return (
                 <div key={item.title} className="flex items-start space-x-5">
                   <div className="flex-shrink-0 bg-[#3BA9FC]/10 p-3 rounded-full">
-                    <Icon className="w-7 h-7 text-[#3BA9FC]" />
+                    <Icon className="w-7 h-7 text-[#3BA9FC] drop-shadow-[0_0_5px_rgba(59,169,252,0.7)]" />
                   </div>
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-2">
