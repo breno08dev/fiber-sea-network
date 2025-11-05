@@ -1,12 +1,12 @@
 import {
   Wifi,    // Ícone para Internet
-  Tv,      // Ícone para IPTV
+  Tv,      // Ícone para Streaming
   Star,    // Ícone para Premium
-   // Ícone para o separador
+  Check,   // Ícone para o "V"
 } from 'lucide-react';
 import PlanCard from './PlanCard';
 
-// 1. Novos Planos de Internet
+// 1. Planos de Internet (Sem alteração)
 const internetPlans = [
   {
     name: '300 Mega',
@@ -34,57 +34,59 @@ const internetPlans = [
   },
 ];
 
-// 2. Novos Planos com IPTV
-const iptvPlans = [
+// 2. MUDANÇA: Planos com Streaming (antes IPTV)
+//    A descrição agora é um array 'descriptionItems'
+const streamingPlans = [
   {
     name: '400 Mega',
     price: 'R$114,99',
     icon: Tv,
-    description: 'Internet + IPTV (2 telas)',
+    descriptionItems: ['Streaming', 'Filmes', 'Séries'],
   },
   {
     name: '600 Mega',
     price: 'R$129,99',
     icon: Tv,
-    description: 'Internet + IPTV (2 telas)',
+    descriptionItems: ['Streaming', 'Filmes', 'Séries'],
   },
   {
     name: '800 Mega',
     price: 'R$149,99',
     icon: Tv,
-    description: 'Internet + IPTV (2 telas)',
+    descriptionItems: ['Streaming', 'Filmes', 'Séries'],
   },
   {
     name: '1 GB',
     price: 'R$179,99',
     icon: Tv,
-    description: 'Internet + IPTV (2 telas)',
+    descriptionItems: ['Streaming', 'Filmes', 'Séries'],
   },
 ];
 
-// 3. Plano Premium
+// 3. Plano Premium (Sem alteração)
 const premiumPlan = {
   name: '700 Mega',
   price: 'R$179,99',
   icon: Star,
-  description: 'Streams + Câmera de Segurança',
+  description: 'Streaming + Câmera de Segurança',
   isPremium: true,
 };
 
 
 export default function Plans() {
 
-  // 4. MUDANÇA AQUI: Função de WhatsApp atualizada
+  // 4. Função de WhatsApp (Sem alteração na lógica)
   const openWhatsApp = (planName: string, description: string, isPremium: boolean = false) => {
     const phoneNumber = '5511986339066';
     let message = '';
+    
+    // Ajusta a descrição para a mensagem do WhatsApp se for uma lista
+    const planDescription = Array.isArray(description) ? description.join(', ') : description;
 
     if (isPremium) {
-      // Mensagem específica para o plano PREMIUM
-      message = `Olá! Quero contratar o plano PREMIUM (*${planName}* - ${description}).`;
+      message = `Olá! Quero contratar o plano PREMIUM (*${planName}* - ${planDescription}).`;
     } else {
-      // Mensagem direta para os outros planos
-      message = `Olá! Quero contratar o plano *${planName}* (${description}).`;
+      message = `Olá! Quero contratar o plano *${planName}* (${planDescription}).`;
     }
     
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
@@ -127,15 +129,14 @@ export default function Plans() {
               icon={plan.icon}
               name={plan.name}
               price={plan.price}
-              description={plan.description}
+              description={plan.description} // Passa a descrição simples
               delay={index * 150}
-              // 5. MUDANÇA AQUI: Passando os novos parâmetros
               onSelectPlan={() => openWhatsApp(plan.name, plan.description, false)}
             />
           ))}
         </div>
 
-        {/* --- SEPARADOR 2: Planos com IPTV --- */}
+        {/* --- SEPARADOR 2: Planos com Streaming --- */}
         <div className="my-16 md:my-20">
           <div className="relative flex justify-center">
             <div className="absolute inset-0 flex items-center" aria-hidden="true">
@@ -144,7 +145,7 @@ export default function Plans() {
             <div className="relative flex justify-center">
               <span className="bg-primary-dark px-4 py-3 md:px-6 rounded-full text-base md:text-xl font-bold text-base-white shadow-lg shadow-primary-dark/30 flex items-center whitespace-nowrap">
                 <Tv className="w-5 h-5 md:w-6 md:h-6 inline-block mr-2 md:mr-3" />
-                Planos com IPTV
+                Planos com Streaming
               </span>
             </div>
           </div>
@@ -154,18 +155,17 @@ export default function Plans() {
         </div>
 
 
-        {/* Grid para Planos Interativos */}
+        {/* Grid para Planos com Streaming */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {iptvPlans.map((plan, index) => (
+          {streamingPlans.map((plan, index) => (
             <PlanCard
               key={plan.name}
               icon={plan.icon}
               name={plan.name}
               price={plan.price}
-              description={plan.description}
+              descriptionItems={plan.descriptionItems} // Passa a lista de itens
               delay={index * 150}
-              // 6. MUDANÇA AQUI: Passando os novos parâmetros
-              onSelectPlan={() => openWhatsApp(plan.name, plan.description, false)}
+              onSelectPlan={() => openWhatsApp(plan.name, plan.descriptionItems.join(', '), false)}
             />
           ))}
         </div>
@@ -193,10 +193,9 @@ export default function Plans() {
               icon={premiumPlan.icon}
               name={premiumPlan.name}
               price={premiumPlan.price}
-              description={premiumPlan.description}
+              description={premiumPlan.description} // Passa a descrição simples
               isPremium={premiumPlan.isPremium}
               delay={0}
-              // 7. MUDANÇA AQUI: Passando os novos parâmetros (isPremium: true)
               onSelectPlan={() => openWhatsApp(premiumPlan.name, premiumPlan.description, true)}
             />
           </div>

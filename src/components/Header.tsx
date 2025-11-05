@@ -35,7 +35,7 @@ export default function Header() {
       {/* MUDANÇA AQUI: O padding vertical foi de 'py-4' para 'py-2' 
         Isso diminui a altura total do cabeçalho.
       */}
-      <div className="container mx-auto px-4 py-2 flex items-center justify-between">
+      <div className="container mx-auto px-4 py-0 flex items-center justify-between">
         <button onClick={() => scrollToSection('inicio')} aria-label="Página Inicial">
           {/* MUDANÇA AQUI: A altura da logo foi de 'h-10' (40px) para 'h-9' (36px)
             Como o padding do cabeçalho diminuiu, a logo agora parecerá maior.
