@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useInView } from '../hooks/useInView';
-import heroBackgroundImage from '../assets/familia2.jpg';
+import heroBackgroundImage from '../Assets/familia2.jpg';
 
 export default function Hero() {
   const ref = useRef(null);
