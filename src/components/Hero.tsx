@@ -7,7 +7,9 @@ export default function Hero() {
   const isInView = useInView(ref, { threshold: 0.2 });
 
   const openWhatsApp = () => {
-    const whatsappUrl = `https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre os planos de internet.`;
+    const phoneNumber = '5511986339066';
+    const message = "Olá! Vi seu site e gostaria de contratar a melhor internet da região!";
+    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -15,33 +17,53 @@ export default function Hero() {
     <section
       ref={ref}
       id="inicio"
-      // Duração alterada para 1500ms
-      className={`relative h-[80vh] flex items-center justify-center text-white pt-20 
+      // Hero com altura total da tela
+      className={`relative h-screen flex items-center text-base-text pt-24
                  opacity-0 transition-all duration-[1500ms] ease-in-out
                  ${isInView ? 'opacity-100 scale-100' : 'scale-90'}`}
     >
+      {/* Imagem de fundo com gradiente */}
       <div
-        className="absolute inset-0 opacity-40"
+        className="absolute inset-0 bg-cover bg-center"
         style={{
           backgroundImage: `url(${heroBackgroundImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
         }}
-      />
+      >
+        {/* Overlay de gradiente para destacar o texto à esquerda */}
+        <div className="absolute inset-0 bg-gradient-to-r from-primary-dark/70 via-primary-dark/30 to-transparent" />
+      </div>
 
-      <div className="relative z-10 container mx-auto px-4 text-center">
-        <h1 className="text-5xl md:text-7xl font-bold mb-6">
-          Conexão de alta velocidade para transformar seu dia.
+      {/* Conteúdo do Hero - alinhado à esquerda */}
+      <div className="relative z-10 container mx-auto px-4 text-left max-w-7xl">
+        
+        {/* 1. Título Principal (H1) - Grande e em negrito */}
+        <h1 className="text-white text-5xl md:text-7xl font-extrabold mb-6 leading-tight max-w-2xl">
+           Contrate agora a melhor internet da região!
         </h1>
-        <p className="text-xl md:text-2xl mb-8 text-gray-300 max-w-2xl mx-auto">
-          Navegue, assista e jogue com a estabilidade que você merece.
+        
+        {/* 2. Descrição Principal - Tamanho médio */}
+        <p className="text-white text-xl md:text-2xl max-w-2xl mb-4">
+          Tenha 100% de fibra óptica com velocidade real, estabilidade e qualidade garantida.
         </p>
+
+        {/* 3. Nome da Empresa / Slogan - Destaque com negrito médio */}
+        <p className="text-white text-lg md:text-xl font-semibold max-w-2xl mb-4">
+           Fiber Sea Network — Internet sem limites, do jeito que você merece.
+        </p>
+
+        {/* 4. Chamada final - Itálico e cor mais suave */}
+        <p className="text-gray-200 text-lg max-w-2xl mb-8 italic">
+          Pergunte pra quem tem, e comprove a diferença!
+        </p>
+
+        {/* Botão CTA */}
         <button
           onClick={openWhatsApp}
-          className="bg-[#3BA9FC] text-white px-10 py-4 rounded-full text-lg font-semibold hover:bg-[#2a8cd6] transition transform hover:scale-105 shadow-xl shadow-[#3BA9FC]/50 hover:shadow-[#3BA9FC]/40"
+          className="btn-primary px-10 py-4 text-lg"
         >
           Contratar Agora
         </button>
+
       </div>
     </section>
   );

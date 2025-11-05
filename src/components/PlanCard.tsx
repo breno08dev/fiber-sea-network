@@ -2,40 +2,38 @@ import { useRef } from 'react';
 import { useInView } from '../hooks/useInView';
 import { LucideIcon } from 'lucide-react';
 
-// Definindo os tipos para o objeto plan
-interface Plan {
-  name: string;
-  speed: string;
-  price: string;
-  icon: LucideIcon;
-  features: string[];
-  popular?: boolean;
-  type?: 'internet' | 'interactive';
-}
-
+// Nova interface de Props para o card
 interface PlanCardProps {
-  plan: Plan;
-  delay: number; // Prop para o atraso da animação
-  onSelectPlan: () => void; // Função para o botão
+  icon: LucideIcon;
+  name: string; // Ex: "300 Mega"
+  price: string; // Ex: "R$64,99"
+  description: string; // Ex: "Plano de Internet"
+  isPremium?: boolean; // Para o destaque
+  delay: number;
+  onSelectPlan: () => void;
 }
 
-export default function PlanCard({ plan, delay, onSelectPlan }: PlanCardProps) {
+export default function PlanCard({
+  icon: Icon,
+  name,
+  price,
+  description,
+  isPremium = false,
+  delay,
+  onSelectPlan,
+}: PlanCardProps) {
   const ref = useRef(null);
-  // A animação vai disparar quando 20% do card estiver visível
   const isInView = useInView(ref, { threshold: 0.2 });
-
-  const Icon = plan.icon;
-  const isPremium = plan.popular;
 
   return (
     <div
       ref={ref}
       style={{ transitionDelay: `${delay}ms` }}
-      className={`relative bg-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-1000 ease-out transform hover:-translate-y-2 border-2 
+      className={`relative bg-base-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-1000 ease-out transform hover:-translate-y-2 border-2 
                   ${
                     isPremium
-                      ? 'border-amber-400 scale-105'
-                      : 'border-gray-800'
+                      ? 'border-premium-gold scale-105' // Borda dourada e um leve zoom
+                      : 'border-border-color'
                   }
                   ${
                     isInView
@@ -43,73 +41,57 @@ export default function PlanCard({ plan, delay, onSelectPlan }: PlanCardProps) {
                       : 'opacity-0 translate-y-10'
                   }`}
     >
+      {/* Selo Premium */}
       {isPremium && (
-        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-amber-400 text-black px-4 py-1 rounded-full text-sm font-semibold">
-          PREMIUM
+        <div className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-premium-gold text-white px-4 py-1 rounded-full text-sm font-semibold uppercase tracking-wider">
+          Premium
         </div>
       )}
 
+      {/* Ícone */}
       <div className="flex justify-center mb-6">
         <div
           className={`p-4 rounded-full ${
-            isPremium ? 'bg-amber-400/10' : 'bg-[#3BA9FC]/10'
+            isPremium ? 'bg-premium-gold/10' : 'bg-primary-light'
           }`}
         >
           <Icon
             className={`w-10 h-10 ${
               isPremium
-                ? 'text-amber-400'
-                : 'text-[#3BA9FC] drop-shadow-[0_0_5px_rgba(59,169,252,0.7)]'
+                ? 'text-premium-gold'
+                : 'text-primary-dark'
             }`}
           />
         </div>
       </div>
 
-      <h3 className="text-2xl font-bold text-center mb-2 text-white">
-        {plan.name}
+      {/* Nome do Plano */}
+      <h3 className="text-3xl font-bold text-center mb-2 text-base-text">
+        {name}
       </h3>
+      {/* Descrição (Internet ou IPTV) */}
+      <p className="text-center text-base-text-secondary mb-4">{description}</p>
+
+
+      {/* Preço */}
       <div className="text-center mb-6">
         <span
-          className={`text-5xl font-bold [text-shadow:_0_0_8px_rgba(59,169,252,0.5)] ${
-            isPremium ? 'text-amber-400' : 'text-[#3BA9FC]'
+          className={`text-5xl font-bold ${
+            isPremium ? 'text-premium-gold' : 'text-primary-dark'
           }`}
         >
-          {plan.speed}
+          {price}
         </span>
-        <p className="text-3xl font-bold text-white mt-2">
-          {plan.price}
-          <span className="text-lg text-gray-400">/mês</span>
-        </p>
+        <span className="text-lg text-base-text-secondary">/mês</span>
       </div>
-
-      {/* Deixei um min-h para os cards manterem a altura alinhada */}
-      <ul className="space-y-3 mb-8 min-h-[100px]">
-        {plan.features.map((feature, index) => (
-          <li key={index} className="flex items-center text-gray-300">
-            <svg
-              className={`w-5 h-5 mr-2 flex-shrink-0 ${
-                isPremium ? 'text-amber-400' : 'text-[#3BA9FC]'
-              }`}
-              fill="currentColor"
-              viewBox="0 0 20 20"
-            >
-              <path
-                fillRule="evenodd"
-                d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                clipRule="evenodd"
-              />
-            </svg>
-            {feature}
-          </li>
-        ))}
-      </ul>
-
+      
+      {/* Botão */}
       <button
         onClick={onSelectPlan}
-        className={`w-full py-3 rounded-full font-semibold transition transform hover:scale-105 ${
+        className={`w-full py-3 rounded-full font-semibold text-lg transition transform hover:scale-105 ${
           isPremium
-            ? 'bg-amber-400 text-black hover:bg-amber-300'
-            : 'bg-gray-800 text-[#3BA9FC] hover:bg-gray-700'
+            ? 'bg-premium-gold text-white hover:bg-amber-600' // Botão Dourado
+            : 'btn-secondary' // Botão Azul Claro (do index.css)
         }`}
       >
         Contratar Agora

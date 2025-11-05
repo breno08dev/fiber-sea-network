@@ -1,6 +1,6 @@
 export default function WhatsAppButton() {
   const openWhatsApp = () => {
-    const whatsappUrl = `https://wa.me/5511999999999?text=Olá! Gostaria de saber mais sobre os planos de internet.`;
+    const whatsappUrl = `https://wa.me/5511986339066?text=Olá! Gostaria de saber mais sobre os planos de internet.`;
     window.open(whatsappUrl, '_blank');
   };
 

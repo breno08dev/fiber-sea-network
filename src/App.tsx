@@ -8,11 +8,11 @@ import Contact from './components/Contact';
 import Footer from './components/Footer';
 import WhatsAppButton from './components/WhatsAppButton';
 import CookieConsent from './components/CookieConsent';
+// 1. Importar o novo componente Toast
+import ToastCTA from './components/ToastCTA';
 
 function App() {
   return (
-    // Removemos o "bg-gradient-to-b from-black to-gray-950" daqui
-    // para que o fundo do 'body' (definido no index.css) apareça.
     <div className="min-h-screen">
       <Header />
       <Hero />
@@ -24,6 +24,7 @@ function App() {
       <Footer />
       <WhatsAppButton />
       <CookieConsent />
+      <ToastCTA />
     </div>
   );
 }

@@ -1,84 +1,55 @@
-import { Target, Eye, Heart } from 'lucide-react';
-// 1. Importar o novo componente de card
+import { Eye, Target, Gem } from 'lucide-react';
 import ValueCard from './ValueCard';
-// 2. Importar a imagem para a nova seção
-import aboutImage from '../assets/equipe-de-telemarketing.jpeg';
 
 const values = [
   {
-    title: 'Nossa Missão',
+    title: 'Visão',
     description:
-      'Encurtar distâncias e possibilitar novas conquistas, entregando uma conexão de alta performance que transforma a vida de nossos clientes.',
-    icon: Target,
+      'Ser referência em conectividade e inovação, levando internet de alta performance a todas as regiões, com atendimento humano e tecnologia de ponta.',
+    icon: Eye, 
   },
   {
-    title: 'Nossa Visão',
+    title: 'Missão',
     description:
-      'Ser a ponte para o futuro digital da nossa região, reconhecidos pela excelência e por conectar pessoas aos seus sonhos.',
-    icon: Eye,
+      'Oferecer soluções digitais que conectem pessoas, negócios e ideias, com qualidade, agilidade e suporte próximo do cliente.',
+    icon: Target, 
   },
   {
-    title: 'Nossos Valores',
+    title: 'Valores',
     description:
-      'Compromisso com a sua velocidade, transparência em cada mega e uma paixão incansável por inovar e servir.',
-    icon: Heart,
+      'Comprometimento, transparência, inovação e foco total na experiência do usuário. Cada conexão é uma parceria de confiança.',
+    icon: Gem, 
   },
 ];
 
 export default function About() {
-  // 3. Removemos o 'useRef' e 'useInView' da seção principal
-  // A animação agora é controlada por 'ValueCard'
-
   return (
     <section
       id="sobre"
-      // 4. Removemos as classes de animação da seção inteira
-      className={`py-20`}
+      className={`py-20 bg-primary-light`}
     >
       <div className="container mx-auto px-4">
-        {/* --- SEÇÃO 1: SOBRE A EMPRESA --- */}
-        <div className="grid lg:grid-cols-2 gap-12 items-center mb-24">
-          {/* Coluna de Imagem */}
-          <div>
-            <img
-              src={aboutImage}
-              alt="Equipe de atendimento da SUA EMPRESA"
-              className="rounded-2xl shadow-2xl w-full h-full object-cover max-h-[450px]"
-            />
-          </div>
-          {/* Coluna de Texto */}
-          <div className="text-white">
-            <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Conectando Histórias, Entregando o Futuro
-            </h2>
-            <p className="text-xl text-gray-400 mb-6">
-              Somos mais do que um provedor de internet. Nascemos com o
-              propósito de conectar pessoas, encurtar distâncias e impulsionar
-              o desenvolvimento da nossa comunidade.
-            </p>
-            <p className="text-lg text-gray-400">
-              Com tecnologia de ponta em fibra óptica e uma equipe local
-              dedicada, garantimos não apenas velocidade, mas a estabilidade
-              que sua família e seu negócio precisam para navegar, trabalhar,
-              estudar e se divertir sem limites.
-            </p>
-          </div>
+        
+        <div className="text-center mb-16">
+          {/* MUDANÇA AQUI: Aplicando o novo estilo ao H2 */}
+          <h2 className="inline-block bg-primary-dark text-base-white text-3xl md:text-4xl font-bold px-8 py-3 rounded-full shadow-lg border border-border-color">
+            Nossa essência
+          </h2>
+          {/* Aumentei a margem (mt-6) para dar espaço ao novo título */}
+          <p className="text-xl text-base-text-secondary mt-6 max-w-2xl mx-auto">
+            O que nos move a conectar pessoas e negócios ao novo.
+          </p>
         </div>
 
-        {/* --- SEÇÃO 2: MISSÃO, VISÃO E VALORES --- */}
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-12 text-white">
-          Nosso Propósito
-        </h2>
-
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+        {/* Grid responsivo para os 3 cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {values.map((value, index) => (
-            // 5. Usando o ValueCard com animação individual e delay
             <ValueCard
               key={value.title}
               icon={value.icon}
               title={value.title}
               description={value.description}
-              delay={index * 150} // Atraso de 0ms, 150ms, 300ms
+              delay={index * 150}
             />
           ))}
         </div>

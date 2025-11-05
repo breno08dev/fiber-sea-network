@@ -15,24 +15,36 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* NOVO BACKGROUND 
-    A base é preta, com um gradiente linear para um azul-escuro (slate-950)
-    e um "brilho" radial sutil no topo da página.
-  */
-  background-color: #020617; /* Cor de fallback (Tailwind slate-950) */
-  background-image: 
-    /* Um "brilho" azul sutil vindo de cima (usando nossa cor #3BA9FC com 15% opacidade) */
-    radial-gradient(ellipse 80% 60% at 50% -10%, rgba(59, 169, 252, 0.15), transparent),
-    /* Um gradiente de preto para azul-escuro (Tailwind slate-950) */
-    linear-gradient(180deg, #000000 0%, #020617 100%);
-  background-attachment: fixed; /* O fundo não rola com a página */
+  /* NOVO BACKGROUND (Light Mode) */
+  @apply bg-base-white text-base-text;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+/* Classes de componentes globais para manter o padrão 
+*/
+@layer components {
+  /* Botão principal (Azul escuro, texto branco) */
+  .btn-primary {
+    @apply bg-primary-dark text-base-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out;
+  }
+  .btn-primary:hover {
+    @apply bg-primary-dark-hover shadow-lg transform hover:scale-105;
+  }
+
+  /* Botão secundário (Fundo azul claro, texto azul escuro) */
+  .btn-secondary {
+    @apply bg-primary-light text-primary-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 ease-in-out;
+  }
+  .btn-secondary:hover {
+    @apply bg-blue-100 transform hover:scale-105;
+  }
+}
+
 @layer utilities {
+  /* Animação do WhatsApp (Mantida) */
   .animate-pulse-whatsapp {
     animation: pulse-whatsapp 2s infinite;
   }
