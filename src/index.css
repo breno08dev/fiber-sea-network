@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -14,8 +14,6 @@ body {
   font-family: 'Inter', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-
-  /* NOVO BACKGROUND (Light Mode) */
   @apply bg-base-white text-base-text;
 }
 
@@ -23,30 +21,42 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Classes de componentes globais para manter o padrão 
-*/
 @layer components {
-  /* Botão principal (Azul escuro, texto branco) */
+  /* Botão Primário Moderno 2026 */
   .btn-primary {
-    @apply bg-primary-dark text-base-white font-semibold py-3 px-6 rounded-lg shadow-md transition-all duration-300 ease-in-out;
+    @apply relative overflow-hidden bg-gradient-to-r from-primary-dark to-[#0077CC] text-base-white font-bold py-3 px-8 rounded-full shadow-[0_4px_14px_0_rgba(0,90,156,0.39)] transition-all duration-300 ease-in-out border border-transparent;
   }
+  
   .btn-primary:hover {
-    @apply bg-primary-dark-hover shadow-lg transform hover:scale-105;
+    @apply shadow-[0_6px_20px_rgba(0,90,156,0.23)] transform scale-105 -translate-y-0.5 brightness-110;
   }
 
-  /* Botão secundário (Fundo azul claro, texto azul escuro) */
+  /* Efeito de brilho interno no hover */
+  .btn-primary::after {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full bg-white/20 opacity-0 transition-opacity duration-300;
+  }
+  .btn-primary:hover::after {
+    @apply opacity-100;
+  }
+
+  /* Botão Secundário Moderno */
   .btn-secondary {
-    @apply bg-primary-light text-primary-dark font-semibold py-3 px-6 rounded-lg transition-all duration-300 ease-in-out;
+    @apply bg-white/80 backdrop-blur-sm text-primary-dark font-bold py-3 px-8 rounded-full border border-primary-light shadow-sm transition-all duration-300 ease-in-out;
   }
   .btn-secondary:hover {
-    @apply bg-blue-100 transform hover:scale-105;
+    @apply bg-white border-primary-dark/30 shadow-md transform scale-105;
   }
 }
 
 @layer utilities {
-  /* Animação do WhatsApp (Mantida) */
   .animate-pulse-whatsapp {
     animation: pulse-whatsapp 2s infinite;
+  }
+
+  /* Classe utilitária para efeito de vidro */
+  .glass {
+    @apply bg-base-white/80 backdrop-blur-md border-b border-white/20;
   }
 
   @keyframes pulse-whatsapp {

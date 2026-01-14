@@ -1,207 +1,197 @@
-import { useState, useRef } from 'react';
-// 1. Importar o ícone de E-mail (Mail)
-import { User, MessageSquare, Clock, Headset, Mail } from 'lucide-react';
+import { useRef, useState } from 'react';
 import { useInView } from '../hooks/useInView';
+import { Send, Phone, MessageCircle, Mail, Copy, Check, Clock } from 'lucide-react';
 
 export default function Contact() {
   const ref = useRef(null);
   const isInView = useInView(ref, { threshold: 0.1 });
-
-  const [formData, setFormData] = useState({
-    name: '',
-    message: '',
-  });
-
-  const [errors, setErrors] = useState({
-    name: '',
-    message: '',
-  });
-
-  // 2. Estado para controlar a mensagem de "copiado!"
-  const [showCopyMessage, setShowCopyMessage] = useState(false);
-
-  const validateForm = () => {
-    const newErrors = { name: '', message: '' };
-    let isValid = true;
-
-    if (!formData.name) {
-      newErrors.name = 'Por favor, preencha seu nome.';
-      isValid = false;
-    }
-    if (!formData.message) {
-      newErrors.message = 'Por favor, digite sua mensagem.';
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
+  const [formState, setFormState] = useState({ name: '', phone: '', message: '' });
+  const [emailCopied, setEmailCopied] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault(); 
-
-    if (validateForm()) {
-      const phoneNumber = '5511986339066'; 
-      const text = `Olá! Meu nome é ${formData.name}.%0A%0A${formData.message}`;
-      const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-      window.open(whatsappUrl, '_blank');
-      
-      setFormData({ name: '', message: '' });
-      setErrors({ name: '', message: '' });
-    }
+    e.preventDefault();
+    const text = `Olá! Meu nome é ${formState.name}. Telefone: ${formState.phone}. Mensagem: ${formState.message}`;
+    const whatsappUrl = `https://wa.me/5511986339066?text=${encodeURIComponent(text)}`;
+    window.open(whatsappUrl, '_blank');
+    setFormState({ name: '', phone: '', message: '' });
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // 3. Função para copiar e-mail e mostrar mensagem
-  const handleEmailCopy = () => {
+  const copyEmail = () => {
     const email = 'networkfibersea@gmail.com';
     navigator.clipboard.writeText(email).then(() => {
-      // Mostra a mensagem de sucesso
-      setShowCopyMessage(true);
-      // Esconde a mensagem após 2 segundos
-      setTimeout(() => {
-        setShowCopyMessage(false);
-      }, 2000);
-    }).catch(err => {
-      console.error('Erro ao copiar e-mail: ', err);
+      setEmailCopied(true);
+      setTimeout(() => setEmailCopied(false), 2000);
     });
   };
-
 
   return (
     <section
       ref={ref}
       id="contato"
-      className={`py-20 bg-primary-light opacity-0 transition-all duration-[1500ms] ease-out
-                  ${isInView ? 'opacity-100 translate-y-0' : 'translate-y-10'}`}
+      className="relative py-24 bg-slate-50 overflow-hidden" // Base sólida limpa
     >
-      <div className="container mx-auto px-4">
-       <div className="text-center mb-16">
-          <h2 className="inline-block bg-primary-dark text-white text-3xl md:text-4xl font-bold px-8 py-3 rounded-full shadow-lg shadow-primary-dark/30">
-           Atendimento
-          </h2>
+      {/* --- BACKGROUND PREMIUM --- */}
+      
+      {/* 1. Grid de Pontos de Alta Precisão */}
+      <div 
+        className="absolute inset-0 z-0 opacity-[0.4]"
+        style={{ 
+          backgroundImage: 'radial-gradient(#94a3b8 1px, transparent 1px)', 
+          backgroundSize: '32px 32px' 
+        }}
+      />
+
+      {/* 2. Máscara Radial (Vignette) para focar no centro e limpar as bordas */}
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_center,transparent_0%,#f8fafc_100%)] pointer-events-none" />
+
+      {/* 3. Luz de Topo Suave (Highlight) */}
+      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-blue-200 to-transparent opacity-50" />
+      <div className="absolute top-0 inset-x-0 h-64 bg-gradient-to-b from-white to-transparent opacity-80 pointer-events-none" />
+
+
+      <div className="container mx-auto px-4 relative z-10">
+        
+        <div className="grid lg:grid-cols-2 gap-12 lg:gap-24">
           
-          <p className="text-xl text-base-text-secondary max-w-2xl mx-auto">
-            <br />Estamos prontos para te atender. Envie sua mensagem ou venha nos visitar.
-          </p>
-        </div>
+          {/* --- LADO ESQUERDO: Chamada e Contatos Diretos --- */}
+          <div 
+            className={`flex flex-col justify-center transition-all duration-1000 transform 
+            ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-10'}`}
+          >
+            <span className="inline-block py-1 px-3 rounded bg-white text-blue-700 border border-blue-100 text-xs font-bold tracking-widest uppercase mb-6 w-fit shadow-sm">
+              Fale Conosco
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-slate-900 mb-6 tracking-tight leading-tight">
+              Pronto para <br/>
+              <span className="text-blue-700">acelerar</span> sua vida?
+            </h2>
+            <p className="text-slate-600 text-lg mb-12 leading-relaxed max-w-md font-medium">
+              Não deixe para depois. Nossa equipe está online agora para tirar suas dúvidas e instalar sua ultra velocidade.
+            </p>
 
-        <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-
-          {/* COLUNA DA ESQUERDA: Card de Horários e E-mail */}
-          <div className="bg-base-white p-8 md:p-12 rounded-2xl shadow-lg border border-border-color space-y-8">
-            
-            <h3 className="text-3xl font-bold text-base-text text-center">Nossos Horários</h3>
-
-            {/* Atendimento Comercial */}
-            <div className="flex flex-col items-center text-center">
-              <Clock className="w-8 h-8 text-primary-dark" />
-              <h4 className="text-2xl font-semibold mt-2 mb-2 text-base-text">Atendimento Comercial</h4>
-              <div className="text-base-text-secondary text-lg space-y-1">
-                <p>Segunda a Sexta: 08:00 às 20:00</p>
-                <p>Sábado: 09:00 às 14:00</p>
-              </div>
-            </div>
-
-            {/* Suporte Técnico */}
-            <div className="flex flex-col items-center text-center">
-              <Headset className="w-8 h-8 text-primary-dark" />
-              <h4 className="text-2xl font-semibold mt-2 mb-2 text-base-text">Suporte Técnico</h4>
-              <div className="text-base-text-secondary text-lg space-y-1">
-                <p>Segunda a Sexta: 08:00 às 20:00</p>
-                <p>Sábado: 09:00 às 14:00</p>
-              </div>
-            </div>
-
-            {/* 4. Divisor */}
-            <hr className="w-3/4 mx-auto border-border-color" />
-
-            {/* 5. Bloco de E-mail Adicionado */}
-            <div className="flex flex-col items-center text-center">
-              <Mail className="w-8 h-8 text-primary-dark" />
-              <h4 className="text-2xl font-semibold mt-2 mb-2 text-base-text">E-mail</h4>
+            {/* Cards de Contato Rápido */}
+            <div className="space-y-4">
               
-              <button
-                type="button" 
-                onClick={handleEmailCopy}
-                className="text-base-text-secondary text-lg font-medium cursor-pointer hover:text-primary-dark transition"
-                title="Copiar e-mail"
+              {/* WhatsApp */}
+              <a 
+                href="https://wa.me/5511986339066"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center p-5 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-green-400 hover:shadow-lg hover:shadow-green-100/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer"
               >
-                networkfibersea@gmail.com
-              </button>
-              
-              {/* 6. Mensagem de Feedback (Toast) */}
-              {showCopyMessage && (
-                <p className="text-green-600 text-sm font-semibold mt-2">
-                  E-mail copiado com sucesso!
-                </p>
-              )}
+                <div className="w-12 h-12 rounded-full bg-green-50 text-green-500 flex items-center justify-center group-hover:bg-green-500 group-hover:text-white transition-colors border border-green-100/50">
+                  <MessageCircle className="w-6 h-6" />
+                </div>
+                <div className="ml-5">
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">WhatsApp (Recomendado)</p>
+                  <p className="text-xl font-bold text-slate-800 group-hover:text-green-600 transition-colors">(11) 98633-9066</p>
+                </div>
+              </a>
+
+              {/* E-mail */}
+              <div 
+                onClick={copyEmail}
+                className="group flex items-center p-5 bg-white rounded-2xl shadow-sm border border-slate-200 hover:border-blue-400 hover:shadow-lg hover:shadow-blue-100/50 hover:-translate-y-1 transition-all duration-300 cursor-pointer relative"
+              >
+                <div className="w-12 h-12 rounded-full bg-blue-50 text-blue-500 flex items-center justify-center group-hover:bg-blue-600 group-hover:text-white transition-colors border border-blue-100/50">
+                  <Mail className="w-6 h-6" />
+                </div>
+                <div className="ml-5 flex-grow">
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider">E-mail</p>
+                  <div className="flex items-center gap-2">
+                    <p className="text-lg md:text-xl font-bold text-slate-800 group-hover:text-blue-600 transition-colors break-all">
+                      networkfibersea@gmail.com
+                    </p>
+                    {emailCopied ? (
+                      <Check className="w-4 h-4 text-green-500 animate-in fade-in zoom-in" />
+                    ) : (
+                      <Copy className="w-4 h-4 text-slate-300 opacity-0 group-hover:opacity-100 transition-opacity" />
+                    )}
+                  </div>
+                  {emailCopied && <span className="text-xs text-green-500 font-medium absolute right-5 top-5">Copiado!</span>}
+                </div>
+              </div>
+
+              {/* Horários */}
+              <div className="flex items-start p-5 bg-white/60 backdrop-blur-sm rounded-2xl border border-slate-200/60">
+                <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center shadow-inner">
+                  <Clock className="w-6 h-6" />
+                </div>
+                <div className="ml-5">
+                  <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mb-1">Horário de Atendimento</p>
+                  <div className="text-slate-700 font-medium text-sm space-y-1">
+                    <p><span className="font-bold text-slate-900">Seg - Sex:</span> 08:00 às 20:00</p>
+                    <p><span className="font-bold text-slate-900">Sábado:</span> 09:00 às 14:00</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
 
-          {/* COLUNA DA DIREITA: Card de Formulário */}
-          <div className="bg-base-white p-8 md:p-12 rounded-2xl shadow-lg border border-border-color">
-            <h3 className="text-3xl font-bold text-base-text mb-6">Envie sua Mensagem</h3>
-            
-            <form onSubmit={handleSubmit} className="space-y-6" noValidate>
-              <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-base-text mb-2">
-                  Seu Nome
-                </label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+
+          {/* --- LADO DIREITO: Formulário --- */}
+          <div 
+            className={`relative transition-all duration-1000 delay-200 transform 
+            ${isInView ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-10'}`}
+          >
+            <div className="bg-white rounded-[2.5rem] p-8 md:p-10 shadow-2xl shadow-slate-200/50 border border-slate-100 relative overflow-hidden">
+              
+              {/* Efeito de brilho sutil no topo do card */}
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600 opacity-80" />
+
+              <h3 className="text-2xl font-bold text-slate-900 mb-2">Envie uma mensagem</h3>
+              <p className="text-slate-500 mb-8 text-sm">Preencha e retornaremos via WhatsApp.</p>
+
+              <form onSubmit={handleSubmit} className="space-y-5">
+                <div>
+                  <label htmlFor="name" className="block text-sm font-bold text-slate-700 mb-2 ml-1">Seu Nome</label>
                   <input
                     type="text"
                     id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border-2 border-border-color rounded-lg focus:border-primary-dark focus:outline-none focus:ring-4 focus:ring-primary-dark/30 transition text-base-text"
-                    placeholder="Nome completo"
+                    required
+                    className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                    placeholder="Como podemos te chamar?"
+                    value={formState.name}
+                    onChange={(e) => setFormState({ ...formState, name: e.target.value })}
                   />
                 </div>
-                {errors.name && (
-                  <p className="text-red-600 text-sm mt-1">{errors.name}</p>
-                )}
-              </div>
 
-              <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-base-text mb-2">
-                  Mensagem
-                </label>
-                <div className="relative">
-                  <MessageSquare className="absolute left-3 top-4 w-5 h-5 text-gray-400" />
+                <div>
+                  <label htmlFor="phone" className="block text-sm font-bold text-slate-700 mb-2 ml-1">Seu WhatsApp</label>
+                  <input
+                    type="tel"
+                    id="phone"
+                    required
+                    className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-400 placeholder:font-normal"
+                    placeholder="(11) 99999-9999"
+                    value={formState.phone}
+                    onChange={(e) => setFormState({ ...formState, phone: e.target.value })}
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="message" className="block text-sm font-bold text-slate-700 mb-2 ml-1">Mensagem</label>
                   <textarea
                     id="message"
-                    name="message"
-                    value={formData.message}
-                    onChange={handleChange}
-                    rows={5}
-                    className="w-full pl-10 pr-4 py-3 bg-gray-50 border-2 border-border-color rounded-lg focus:border-primary-dark focus:outline-none focus:ring-4 focus:ring-primary-dark/30 transition text-base-text resize-none"
-                    placeholder="Digite sua mensagem aqui..."
+                    rows={4}
+                    required
+                    className="w-full px-4 py-3.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-800 font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all placeholder:text-slate-400 placeholder:font-normal resize-none"
+                    placeholder="Gostaria de saber mais sobre..."
+                    value={formState.message}
+                    onChange={(e) => setFormState({ ...formState, message: e.target.value })}
                   />
                 </div>
-                {errors.message && (
-                  <p className="text-red-600 text-sm mt-1">{errors.message}</p>
-                )}
-              </div>
 
-              <button
-                type="submit"
-                className="w-full bg-[#25D366] text-white py-3 rounded-lg font-bold text-lg hover:bg-[#20ba5a] transition transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
-              >
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z" />
-                </svg>
-                <span>Enviar via WhatsApp</span>
-              </button>
-            </form>
+                <button
+                  type="submit"
+                  className="w-full py-4 px-6 bg-[#25D366] hover:bg-[#20ba5a] text-white rounded-xl font-bold text-lg shadow-lg hover:shadow-green-500/30 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center group"
+                >
+                  <span>Enviar no WhatsApp</span>
+                  <Send className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
+                </button>
+              </form>
+            </div>
           </div>
 
         </div>

@@ -1,51 +1,79 @@
 import { useState, useEffect } from 'react';
-import { Cookie } from 'lucide-react';
+import { Cookie, X, ShieldCheck } from 'lucide-react';
 
 export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
-    // Verifica se o usuário já deu consentimento
-    const consent = localStorage.getItem('cookie_consent');
-    if (consent !== 'true') {
-      setIsVisible(true);
+    // Verifica se já aceitou ou recusou
+    const consent = localStorage.getItem('cookieConsent');
+    if (!consent) {
+      // Pequeno delay para aparecer suavemente
+      const timer = setTimeout(() => setIsVisible(true), 1500);
+      return () => clearTimeout(timer);
     }
   }, []);
 
   const handleAccept = () => {
-    // Salva o consentimento no localStorage e esconde o banner
-    localStorage.setItem('cookie_consent', 'true');
+    localStorage.setItem('cookieConsent', 'accepted');
     setIsVisible(false);
   };
 
-  if (!isVisible) {
-    return null;
-  }
+  const handleDecline = () => {
+    localStorage.setItem('cookieConsent', 'declined');
+    setIsVisible(false);
+  };
+
+  if (!isVisible) return null;
 
   return (
-    // 1. Fundo branco (bg-base-white) e borda clara (border-border-color)
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-base-white shadow-lg border-t-2 border-border-color">
-      <div className="container mx-auto px-4 py-5">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          
-          {/* Texto e Ícone */}
-          <div className="flex items-center space-x-3">
-            {/* 2. Ícone no novo azul escuro (text-primary-dark) */}
-            <Cookie className="w-6 h-6 text-primary-dark flex-shrink-0 drop-shadow-[0_0_5px_rgba(0,90,156,0.3)]" />
-            {/* 3. Texto no novo cinza secundário (text-base-text-secondary) */}
-            <p className="text-base-text-secondary text-sm md:text-base">
-              Nós utilizamos cookies para melhorar sua experiência de navegação.
-              Ao continuar, você concorda com nossa política de privacidade.
-            </p>
+    <div className="fixed bottom-0 left-0 right-0 z-[60] p-4 md:p-6 flex justify-center md:justify-end pointer-events-none">
+      <div 
+        className="bg-white/90 backdrop-blur-md border border-slate-200 p-6 rounded-[1.5rem] shadow-2xl shadow-slate-300/50 max-w-md w-full pointer-events-auto transform transition-all duration-500 animate-in slide-in-from-bottom-10 fade-in zoom-in-95"
+      >
+        {/* Cabeçalho com Ícone e Fechar */}
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-3">
+            {/* Ícone de Cookie em AZUL (Padrão do site) */}
+            <div className="w-10 h-10 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center border border-blue-100 shadow-sm">
+              <Cookie className="w-5 h-5" />
+            </div>
+            <div>
+              <h4 className="text-slate-900 font-bold text-lg leading-tight">Cookies e Privacidade</h4>
+              <p className="text-blue-500 text-xs font-bold uppercase tracking-wide">Transparência Total</p>
+            </div>
           </div>
+          <button 
+            onClick={handleDecline} 
+            className="text-slate-400 hover:text-slate-600 transition-colors p-1"
+            aria-label="Fechar"
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
 
-          {/* Botão de Aceite */}
+        {/* Texto Explicativo */}
+        <p className="text-slate-600 text-sm leading-relaxed mb-6 font-medium">
+          Nós utilizamos cookies para personalizar sua experiência e garantir que você encontre a melhor conexão possível. 
+          Ao continuar, você concorda com nossa política.
+        </p>
+
+        {/* Botões de Ação */}
+        <div className="flex flex-col sm:flex-row gap-3">
           <button
             onClick={handleAccept}
-            // 4. Usando a classe de botão global (btn-primary) que já criamos
-            className="btn-primary"
+            // Botão Aceitar no AZUL PADRÃO (#1d4ed8 / blue-700)
+            className="flex-1 bg-[#1d4ed8] hover:bg-blue-800 text-white py-3 px-4 rounded-xl font-bold text-sm shadow-lg hover:shadow-blue-900/20 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2"
           >
-            Entendi e aceito
+            <ShieldCheck className="w-4 h-4" />
+            Aceitar Todos
+          </button>
+          
+          <button
+            onClick={handleDecline}
+            className="flex-1 bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 hover:text-slate-900 py-3 px-4 rounded-xl font-bold text-sm transition-all duration-300"
+          >
+            Recusar
           </button>
         </div>
       </div>

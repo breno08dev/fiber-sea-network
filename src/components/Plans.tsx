@@ -1,69 +1,25 @@
 import {
-  Wifi,    // Ícone para Internet
-  Tv,      // Ícone para Streaming
-  Star,    // Ícone para Premium
-  Check,   // Ícone para o "V"
+  Wifi,
+  Tv,
+  Star,
 } from 'lucide-react';
 import PlanCard from './PlanCard';
 
-// 1. Planos de Internet (Sem alteração)
+// 1. Dados dos Planos (Mantidos)
 const internetPlans = [
-  {
-    name: '300 Mega',
-    price: 'R$64,99',
-    icon: Wifi,
-    description: 'Internet Fibra',
-  },
-  {
-    name: '500 Mega',
-    price: 'R$79,99',
-    icon: Wifi,
-    description: 'Internet Fibra',
-  },
-  {
-    name: '700 Mega',
-    price: 'R$99,99',
-    icon: Wifi,
-    description: 'Internet Fibra',
-  },
-  {
-    name: '1 GB',
-    price: 'R$119,99',
-    icon: Wifi,
-    description: 'Internet Fibra',
-  },
+  { name: '300 Mega', price: 'R$64,99', icon: Wifi, description: 'Internet Fibra' },
+  { name: '500 Mega', price: 'R$79,99', icon: Wifi, description: 'Internet Fibra' },
+  { name: '700 Mega', price: 'R$99,99', icon: Wifi, description: 'Internet Fibra' },
+  { name: '1 GB', price: 'R$119,99', icon: Wifi, description: 'Internet Fibra' },
 ];
 
-// 2. MUDANÇA: Planos com Streaming (antes IPTV)
-//    A descrição agora é um array 'descriptionItems'
 const streamingPlans = [
-  {
-    name: '400 Mega',
-    price: 'R$114,99',
-    icon: Tv,
-    descriptionItems: ['Streaming', 'Filmes', 'Séries'],
-  },
-  {
-    name: '600 Mega',
-    price: 'R$129,99',
-    icon: Tv,
-    descriptionItems: ['Streaming', 'Filmes', 'Séries'],
-  },
-  {
-    name: '800 Mega',
-    price: 'R$149,99',
-    icon: Tv,
-    descriptionItems: ['Streaming', 'Filmes', 'Séries'],
-  },
-  {
-    name: '1 GB',
-    price: 'R$179,99',
-    icon: Tv,
-    descriptionItems: ['Streaming', 'Filmes', 'Séries'],
-  },
+  { name: '400 Mega', price: 'R$114,99', icon: Tv, descriptionItems: ['Streaming', 'Filmes', 'Séries'] },
+  { name: '600 Mega', price: 'R$129,99', icon: Tv, descriptionItems: ['Streaming', 'Filmes', 'Séries'] },
+  { name: '800 Mega', price: 'R$149,99', icon: Tv, descriptionItems: ['Streaming', 'Filmes', 'Séries'] },
+  { name: '1 GB', price: 'R$179,99', icon: Tv, descriptionItems: ['Streaming', 'Filmes', 'Séries'] },
 ];
 
-// 3. Plano Premium (Sem alteração)
 const premiumPlan = {
   name: '700 Mega',
   price: 'R$179,99',
@@ -72,15 +28,11 @@ const premiumPlan = {
   isPremium: true,
 };
 
-
 export default function Plans() {
 
-  // 4. Função de WhatsApp (Sem alteração na lógica)
   const openWhatsApp = (planName: string, description: string, isPremium: boolean = false) => {
     const phoneNumber = '5511986339066';
     let message = '';
-    
-    // Ajusta a descrição para a mensagem do WhatsApp se for uma lista
     const planDescription = Array.isArray(description) ? description.join(', ') : description;
 
     if (isPremium) {
@@ -96,108 +48,101 @@ export default function Plans() {
   return (
     <section
       id="planos"
-      className={`py-20 bg-primary-light`}
+      // NOVO BACKGROUND: Gradiente profissional de Azul Bebê (sky-50/100) para um Azul Médio (blue-200)
+      className="py-24 relative overflow-hidden bg-gradient-to-b from-sky-50 via-blue-100 to-blue-200"
     >
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl md:text-5xl font-bold text-center mb-4 text-base-text">
-          Escolha o plano ideal para você
-        </h2>
-        <p className="text-center text-base-text-secondary mb-12 text-lg">
-          Velocidade, estabilidade e o melhor custo-benefício.
-        </p>
+      {/* Elementos decorativos de fundo ajustados para o novo tema azul */}
+      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+        {/* Blob Branco suave para iluminar o topo */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-white/40 rounded-full mix-blend-overlay filter blur-3xl opacity-60 animate-blob" />
+        {/* Blob Azul mais escuro para profundidade na direita */}
+        <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[80px] opacity-40 animate-blob animation-delay-2000" />
+      </div>
 
-        {/* --- SEPARADOR 1: Planos de Internet --- */}
-        <div className="mb-16 md:mb-20">
-          <div className="relative flex justify-center">
-            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t border-border-color" />
-            </div>
-            <div className="relative flex justify-center">
-              <span className="bg-primary-dark px-4 py-3 md:px-6 rounded-full text-base md:text-xl font-bold text-base-white shadow-lg shadow-primary-dark/30 flex items-center whitespace-nowrap">
-                <Wifi className="w-5 h-5 md:w-6 md:h-6 inline-block mr-2 md:mr-3" />
-                Planos de Internet
-              </span>
-            </div>
-          </div>
-        </div>
-
-        {/* Grid para Planos de Internet */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {internetPlans.map((plan, index) => (
-            <PlanCard
-              key={plan.name}
-              icon={plan.icon}
-              name={plan.name}
-              price={plan.price}
-              description={plan.description} // Passa a descrição simples
-              delay={index * 150}
-              onSelectPlan={() => openWhatsApp(plan.name, plan.description, false)}
-            />
-          ))}
-        </div>
-
-        {/* --- SEPARADOR 2: Planos com Streaming --- */}
-        <div className="my-16 md:my-20">
-          <div className="relative flex justify-center">
-            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t border-border-color" />
-            </div>
-            <div className="relative flex justify-center">
-              <span className="bg-primary-dark px-4 py-3 md:px-6 rounded-full text-base md:text-xl font-bold text-base-white shadow-lg shadow-primary-dark/30 flex items-center whitespace-nowrap">
-                <Tv className="w-5 h-5 md:w-6 md:h-6 inline-block mr-2 md:mr-3" />
-                Planos com Streaming
-              </span>
-            </div>
-          </div>
-           <p className="text-center text-base-text-secondary mt-6 text-lg max-w-2xl mx-auto px-4">
-            Incluso 2 telas simultâneas para você assistir onde quiser.
+      <div className="container mx-auto px-4 relative z-10">
+        
+        {/* Cabeçalho da Seção */}
+        <div className="text-center mb-16 max-w-3xl mx-auto">
+          <h2 className="text-4xl md:text-5xl font-black text-primary-dark mb-6 tracking-tight drop-shadow-sm">
+            Escolha o plano <span className="text-blue-700">ideal</span> para você
+          </h2>
+          <p className="text-slate-600 text-lg md:text-xl font-medium">
+            Velocidade ultra-rápida, estabilidade garantida e o melhor custo-benefício da região.
           </p>
         </div>
 
+        {/* --- GRUPO 1: Planos de Internet --- */}
+        <div className="mb-20">
+          <div className="flex items-center justify-center mb-10">
+            {/* Pílula com fundo mais branco para destacar no fundo azul */}
+            <div className="bg-white/90 backdrop-blur-md px-8 py-3 rounded-full shadow-lg shadow-blue-900/10 border border-blue-200 flex items-center gap-3">
+              <div className="bg-primary-dark p-2 rounded-full text-white shadow-md">
+                <Wifi className="w-5 h-5" />
+              </div>
+              <span className="text-xl font-bold text-primary-dark tracking-wide">Planos de Internet</span>
+            </div>
+          </div>
 
-        {/* Grid para Planos com Streaming */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
-          {streamingPlans.map((plan, index) => (
-            <PlanCard
-              key={plan.name}
-              icon={plan.icon}
-              name={plan.name}
-              price={plan.price}
-              descriptionItems={plan.descriptionItems} // Passa a lista de itens
-              delay={index * 150}
-              onSelectPlan={() => openWhatsApp(plan.name, plan.descriptionItems.join(', '), false)}
-            />
-          ))}
+          <ul className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
+            {internetPlans.map((plan, index) => (
+              <li key={plan.name} className="h-full">
+                <PlanCard
+                  {...plan}
+                  delay={index * 100}
+                  onSelectPlan={() => openWhatsApp(plan.name, plan.description, false)}
+                />
+              </li>
+            ))}
+          </ul>
         </div>
 
-        {/* --- SEPARADOR 3: Promoção Especial --- */}
-        <div className="my-16 md:my-20">
-          <div className="relative flex justify-center">
-            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className="w-full border-t border-border-color" />
+        {/* --- GRUPO 2: Planos com Streaming --- */}
+        <div className="mb-20">
+          <div className="flex flex-col items-center justify-center mb-10">
+            <div className="bg-white/90 backdrop-blur-md px-8 py-3 rounded-full shadow-lg shadow-blue-900/10 border border-blue-200 flex items-center gap-3">
+              <div className="bg-indigo-600 p-2 rounded-full text-white shadow-md">
+                <Tv className="w-5 h-5" />
+              </div>
+              <span className="text-xl font-bold text-primary-dark tracking-wide">Planos com Streaming</span>
             </div>
-            <div className="relative flex justify-center">
-              <span className="bg-premium-gold px-4 py-3 md:px-6 rounded-full text-base md:text-xl font-bold text-white shadow-lg shadow-premium-gold/30 flex items-center whitespace-nowrap">
-                <Star className="w-5 h-5 md:w-6 md:h-6 inline-block mr-2 md:mr-3" />
+            {/* Texto secundário escurecido para contraste no azul */}
+            <p className="text-slate-700 font-medium mt-4 text-center max-w-lg mx-auto bg-white/30 py-1 px-4 rounded-full backdrop-blur-sm">
+              Incluso 2 telas simultâneas para você assistir onde quiser.
+            </p>
+          </div>
+
+          <ul className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8 max-w-7xl mx-auto">
+            {streamingPlans.map((plan, index) => (
+              <li key={plan.name} className="h-full">
+                <PlanCard
+                  {...plan}
+                  delay={index * 100}
+                  onSelectPlan={() => openWhatsApp(plan.name, plan.descriptionItems.join(', '), false)}
+                />
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* --- GRUPO 3: Promoção Especial --- */}
+        <div className="relative">
+          <div className="flex items-center justify-center mb-12">
+             <div className="bg-gradient-to-r from-amber-50 to-white px-10 py-4 rounded-full shadow-xl shadow-premium-gold/20 border border-premium-gold/30 flex items-center gap-3 transform hover:scale-105 transition-transform">
+              <Star className="w-6 h-6 text-premium-gold fill-current animate-pulse" />
+              <span className="text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-premium-gold to-amber-600">
                 Promoção Especial
               </span>
             </div>
           </div>
-        </div>
 
-        {/* Grid para Plano Premium (Centralizado) */}
-        <div className="flex justify-center">
-           <div className="w-full md:w-1/2 lg:w-1/4">
-            <PlanCard
-              key={premiumPlan.name}
-              icon={premiumPlan.icon}
-              name={premiumPlan.name}
-              price={premiumPlan.price}
-              description={premiumPlan.description} // Passa a descrição simples
-              isPremium={premiumPlan.isPremium}
-              delay={0}
-              onSelectPlan={() => openWhatsApp(premiumPlan.name, premiumPlan.description, true)}
-            />
+          <div className="flex justify-center">
+            <div className="w-full md:w-1/2 lg:w-[28%]">
+              <PlanCard
+                {...premiumPlan}
+                delay={0}
+                onSelectPlan={() => openWhatsApp(premiumPlan.name, premiumPlan.description, true)}
+              />
+            </div>
           </div>
         </div>
 
