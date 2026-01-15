@@ -56,7 +56,7 @@ export default function Header() {
           <img 
             src={logoImage} 
             alt="Fiber Sea Network Logo" 
-            className={`transition-all duration-300 w-auto ${isScrolled ? 'h-10' : 'h-12 md:h-14'}`} 
+            className={`transition-all duration-300 w-auto ${isScrolled ? 'h-16' : 'h-12 md:h-16'}`} 
           />
         </a>
 
