@@ -108,7 +108,7 @@ export default function Footer() {
         {/* Divisor e Copyright */}
         <div className="border-t border-border-color pt-8 text-center">
           <p className="text-base-text-secondary">
-            © 2025 Fiber Sea Network - Todos os direitos reservados.
+            © 2026 Fiber Sea Network - Todos os direitos reservados.
           </p>
           <p className="text-base-text-secondary text-sm mt-4">
             Desenvolvido por 
